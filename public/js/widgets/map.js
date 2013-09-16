@@ -26,7 +26,7 @@ Hummingbird.Map = function(element, socket, options) {
 
   this.po = org.polymaps;
 
-  this.defaultZoom = $(window).height() > 760 ? 3 : 2;
+  this.defaultZoom = $(window).height() > 760 ? 3.7 : 2.7;
 
   var zoomFactor = Math.round(Math.log(window.devicePixelRatio || 1) / Math.LN2);
   if(zoomFactor > 0) {

@@ -2,7 +2,7 @@ require 'json'
 
 settings = JSON.parse File.read(File.join(File.dirname(__FILE__), 'app.json'))
 
-set :application, "hummingbird"
+set :application, "PlaceIQ Ad Tracker"
 set :scm, :git
 
 set :repository, settings['capistrano']['repository']

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Hummingbird</title>
+  <title>PIQ AD TRACKER</title>
 
   <meta name="description" content="Hummingbird is an open source real time analytics app.">
 
@@ -28,19 +28,20 @@
   <script src="js/widgets/count.js"></script>
   <script src="js/widgets/map.js"></script>
 
-  <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
+  <link rel="shortcut icon" type="image/png" href="https://si0.twimg.com/profile_images/378800000025541821/dca2b393f69d53fb11168cbfceeed461_bigger.png" />
 </head>
 
 <body>
 
   <div class="topbar">
     <div class="header">
-      <h1>Hummingbird</h1>
+      <h1>PIQ Ad Tracker</h1>
 
       <div class="tagline">Real time web stats</div>
 
-      <button id="test_it">Send test traffic</button>
-      <button id="test_cart">Send "cart_add" event</button>
+      <!--<button id="test_it">Send test traffic</button>-->
+      <!-- <button id="test_cart">Send "cart_add" event</button> -->
+      <!-- <button id="test_seq">Send "test" event</button> -->
     </div>
 
     <div class="hummingbird_graph" id="total">
@@ -68,44 +69,54 @@
 
       $("#total").hummingbirdGraph(socket,
                                  {
-                                   from: "view_totals",
+                                   from: "impressions",
                                    bgLineColor: "#514e57",
                                    tickLineColor: "#64616a",
+                                   lineColors: {
+                                    def: "#ac84ed"
+                                   },
+                                   graphHeight: 80
+                                 });
+                                 
+
+      $("#minute_total").hummingbirdGraph(socket,
+                                 {
+                                   from: "impressions",
+                                   bgLineColor: "#514e57",
+                                   tickLineColor: "#64616a",
+                                   timeUnit: 1, // per second
                                    lineColors: {
                                      def: "#ac84ed"
                                    },
                                    graphHeight: 80
                                  });
+                                 
 
 
       $("#total h2.graph_title span.value").hummingbirdCount(socket,
                                                              {
-                                                               from: "view_totals",
+                                                               from: "impressions",
                                                                every: 10
                                                              });
+                                                             
+                                                             
+      $("#minute_total h2.graph_title span.value").hummingbirdCount(socket,
+                                                             {
+                                                               from: "impressions",
+                                                               every: 10
+                                                             });
+                                                             
+                                                             
 
       $("#map_container").hummingbirdMap(socket, { from: "locations" });
 
       new Hummingbird.Logger(window,
                              socket,
                              {
-                               from: "view_totals",
-                               every: 500
+                               from: "impressions",
+                              every: 500
                              });
 
-      $("#test_it").click(function(e) {
-        e.preventDefault();
-
-        var img = document.createElement('img');
-        img.src = "/tracking_pixel.gif?_=" + Math.random();
-      });
-
-      $("#test_cart").click(function(e) {
-        e.preventDefault();
-
-        var img = document.createElement('img');
-        img.src = "/tracking_pixel.gif?event=cart_add&_=" + Math.random();
-      });
     });
   </script>
 

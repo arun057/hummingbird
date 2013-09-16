@@ -1,9 +1,9 @@
 require "rubygems"
 require "mongo"
 
-@db = Mongo::Connection.new.db('hummingbird')
+@db = Mongo::Connection.new.db('PIQ-Ad-Tracker')
 
-@coll = @db.collection("metrics");
+@coll = @db.collection("impressions");
 
 count = @coll.count
 

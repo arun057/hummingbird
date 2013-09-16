@@ -1,11 +1,14 @@
+require.paths.unshift(__dirname + "/..");
+
 var sys = require('sys'),
-  arrays = require('../lib/arrays'),
+  arrays = require('deps/arrays'),
   mongo = require('mongodb');
 
-var db = new mongo.Db('hummingbird', new mongo.Server('localhost', 27017, {}), {});
+var db = new mongo.Db('PIQ-Ad-Tracker', new mongo.Server('localhost', 27017, {}), {});
 
 db.open(function(p_db) {
-  db.collection('visits', function(err, collection) {
+	console.log("!!!!!! I am opening a connection");
+  db.collection('impressions', function(err, collection) {
     collection.find({}, {limit: 1000, order: {timestamp: -1}}, function(err, cursor) {
       cursor.each(function(err, item) {
         if(item) {
