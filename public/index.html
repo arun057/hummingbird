@@ -69,7 +69,7 @@
 
       $("#total").hummingbirdGraph(socket,
                                  {
-                                   from: "impressions",
+                                   from: "view_totals",
                                    bgLineColor: "#514e57",
                                    tickLineColor: "#64616a",
                                    lineColors: {
@@ -81,7 +81,7 @@
 
       $("#minute_total").hummingbirdGraph(socket,
                                  {
-                                   from: "impressions",
+                                   from: "view_totals",
                                    bgLineColor: "#514e57",
                                    tickLineColor: "#64616a",
                                    timeUnit: 1, // per second
@@ -95,14 +95,14 @@
 
       $("#total h2.graph_title span.value").hummingbirdCount(socket,
                                                              {
-                                                               from: "impressions",
+                                                               from: "view_totals",
                                                                every: 10
                                                              });
                                                              
                                                              
       $("#minute_total h2.graph_title span.value").hummingbirdCount(socket,
                                                              {
-                                                               from: "impressions",
+                                                               from: "view_totals",
                                                                every: 10
                                                              });
                                                              
@@ -118,6 +118,7 @@
                              });
 
     });
+  
   </script>
 
 </body>

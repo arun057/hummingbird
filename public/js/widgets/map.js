@@ -19,7 +19,7 @@ Hummingbird.Map = function(element, socket, options) {
     ratePerSecond: 2,
     decimalPlaces: 0,
     maxPlaces: 100,
-    defaultEvent: "open"
+    defaultEvent: "Others"
   };
 
   this.options = $.extend(defaults, options);
@@ -37,7 +37,7 @@ Hummingbird.Map = function(element, socket, options) {
 
   this.map = this.po.map()
     .container(this.element.get(0).appendChild(this.po.svg("svg")))
-    .center({lat: 35, lon: 290})
+    .center({lat: 35, lon: -100})
     .zoom(this.defaultZoom)
     .zoomRange([1, 7 - zoomFactor])
     .add(this.po.interact());
