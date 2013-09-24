@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 body {
-  background: #211d29 url(../images/header-bg.png);
+  background: #40004B;
   font-family: "Lucida Grande", Helvetica, sans-serif;
   margin: 0;
 }
@@ -55,6 +55,33 @@ div.topbar #total div.axis_right {
   width: 25px;
   font-size: 10px;
 }
+
+/*div.topbar #minute_total {
+  position: absolute;
+  top: 40px;
+  right: 0px;
+  left: 275px;
+}
+
+div.topbar #minute_total div.graph {
+  position: absolute;
+  top: 40;
+  left: 0;
+  bottom: 0;
+  right: 40px;
+  float: none;
+  width: auto;
+}
+
+div.topbar #minute_total div.axis_left { display: none; }
+div.topbar #minute_total div.axis_right {
+  float: none;
+  position: absolute;
+  top: 40;
+  right: 0;
+  width: 25px;
+  font-size: 10px;
+}*/
 
 h2.graph_title {
   color: #CCC;

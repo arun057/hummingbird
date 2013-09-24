@@ -11,114 +11,92 @@ $.fn.hummingbirdMap = function(socket, options) {
 if(!Hummingbird) { var Hummingbird = {}; }
 
 Hummingbird.Map = function(element, socket, options) {
-  this.element = element;
-  this.socket = socket;
-
-  var defaults = {
-    averageOver: 1, // second
-    ratePerSecond: 2,
-    decimalPlaces: 0,
-    maxPlaces: 100,
-    defaultEvent: "Others"
-  };
-
-  this.options = $.extend(defaults, options);
-
-  this.po = org.polymaps;
-
-  this.defaultZoom = $(window).height() > 760 ? 4.5 : 3.5;
-
-  var zoomFactor = Math.round(Math.log(window.devicePixelRatio || 1) / Math.LN2);
-  if(zoomFactor > 0) {
-    var doubleSize = "-2x";
-  } else {
-    var doubleSize = "";
-  }
-
-  this.map = this.po.map()
-    .container(this.element.get(0).appendChild(this.po.svg("svg")))
-    .center({lat: 35, lon: -100})
-    .zoom(this.defaultZoom)
-    .zoomRange([1, 7 - zoomFactor])
-    .add(this.po.interact())
-
-    /** 
-     * create map 
-     **/
-    var color = '//a.tiles.mapbox.com/v3/placeiq.map-8v9ayqgr/{Z}/{X}/{Y}.png';
-    var grey = '//a.tiles.mapbox.com/v3/placeiq.map-8kxlh0ef/{z}/{x}/{y}.png';
-    var satellite = "//a.tiles.mapbox.com/v3/placeiq.map-trgmcjhu/{z}/{x}/{y}.png";
+	  this.element = element;
+	  this.socket = socket;
+	
+	  var defaults = {
+	    averageOver: 1, // second
+	    ratePerSecond: 2,
+	    decimalPlaces: 0,
+	    maxPlaces: 100,
+	    defaultEvent: "Others"
+	  };
+	
+	  this.options = $.extend(defaults, options);
+	
+	  this.defaultZoom = $(window).height() > 760 ? 5 : 4;
+	
+	  var zoomFactor = Math.round(Math.log(window.devicePixelRatio || 1) / Math.LN2);
+  
+	  var color = new L.TileLayer('http://{s}.tiles.mapbox.com/v3/placeiq.map-8v9ayqgr/{z}/{x}/{y}.png', {minZoom: 4, maxZoom: 18});
+	  var grey = new L.TileLayer('http://{s}.tiles.mapbox.com/v3/placeiq.map-8kxlh0ef/{z}/{x}/{y}.png', {minZoom: 4, maxZoom: 18});
+	  var satellite = new L.TileLayer('http://{s}.tiles.mapbox.com/v3/placeiq.map-trgmcjhu/{z}/{x}/{y}.png', {minZoom: 4, maxZoom: 18});
+		
+	  var baseMaps = {
+			"Satellite": satellite,
+		    "Color": color,
+		    "Grey": grey
+	  };
+		  	
+	  this.map = new L.Map('map_container', {
+		  layers: [color], 
+		  center: new L.LatLng(39.833333, -98.583333), 
+		  zoom: [zoomFactor], 
+		  minZoom: 4,  
+		  maxZoom: 18 
+	  });
     
-    var baseMaps = {
-	 	"Satellite": satellite,
-    	"Color": color,
-    	"Grey": grey
-    };
-    
-    /*new L.Control.GeoSearch({
+      this.key = function(d) { return [d.latitude, d.longitude, d.type].join(','); };
+	  this.data = [];
+	  this.eventTypes = {};
+	  
+	  /*var svg = d3.select(this.map.getPanes().overlayPane).append("svg.map");
+	  this.layer = svg.append("g")*/
+	  /* Initialize the SVG layer */
+	  this.map._initPathRoot();
+	  this.layer= d3.select(this.map.getPanes().overlayPane).select("svg");
+	  
+	  new L.Control.GeoSearch({
         provider: new L.GeoSearch.Provider.OpenStreetMap({
-          region: region
         }),
         zoomLevel: 13,
-    }).addTo(map);*/
-
-
-  this.map.add(this.po.image()
-          .url(this.po.url(color))
-          .zoom(function(z) { return z + zoomFactor; return 2; }));
-
-  this.map.add(this.po.compass()
-          .pan("none"));
-
-  this.map.add(this.po.fullscreen()
-          );
-
-  this.key = function(d) { return [d.latitude, d.longitude, d.type].join(','); };
-  this.data = [];
-  this.eventTypes = {};
-
-  this.layer = d3.select("svg.map").insert("svg:g", ".compass");
-  this.transform = function(d) {
-    console.log("Transform" + d.longitude);
-    d = this.map.locationPoint({lon: d.longitude , lat: d.latitude});
-    console.log("Transform" + d.x);
-    return "translate(" + Math.floor(d.x) + "," + Math.floor(d.y) + ")";
-  };
-
-  this.map.on("move", (function() {
-    this.layer.selectAll("g").attr("transform", this.transform.bind(this));
-  }).bind(this));
-
-  this.map.on("resize", (function() {
-    this.layer.selectAll("g").attr("transform", this.transform.bind(this));
-  }).bind(this));
-
-  this.legend = $("<div class='legend'></div>");
-  this.element.append(this.legend);
-
-  this.initialize(options);
+      }).addTo(this.map);
+    
+	  this.transform = function(d) {
+	    d = this.map.latLngToLayerPoint(new L.LatLng(d.latitude, d.longitude));
+	    return "translate(" + Math.floor(d.x) + "," + Math.floor(d.y) + ")";
+	  };
+	
+	  this.map.on("move", (function() {
+	    this.layer.selectAll("g").attr("transform", this.transform.bind(this));
+	  }).bind(this));
+	
+	  this.map.on("resize", (function() {
+	    this.layer.selectAll("g").attr("transform", this.transform.bind(this));
+	  }).bind(this));
+	
+	  this.legend = $("<div class='legend'></div>");
+	  this.element.append(this.legend);
+	
+	  this.initialize(options);
 };
 
 
 Hummingbird.Map.prototype = new Hummingbird.Base();
 
 $.extend(Hummingbird.Map.prototype, {
-  name: "Map",
+  name: "map",
 
   onMessage: function(value, average) {
-    var x = 0;
-    if( x/1000 == 1)
-    {
-    	alert("in here");
-    	x = x+1;
-    }
+    
     if(value && value.length > 0) {
       var self = this;
 
       for(var i in value) {
         var geo = value[i];
         //TO DO: Change the map to display name of campain?
-        if(typeof(geo.latitude) == "undefined" || ! geo.city || geo.city == "") { continue; }
+        if(typeof(geo.latitude) == "undefined") { continue; }
+        if(! geo.city || geo.city == "") { geo.label = geo.CI; }
         geo.label = [geo.city, (geo.country == 'US') ? geo.region : geo.country].join(', ');
 
         // Remove duplicates
@@ -151,7 +129,6 @@ $.extend(Hummingbird.Map.prototype, {
         }
 
         var elements = this.layer.selectAll("g").data(this.data, this.key);
-        console.log("Elements" + elements);
         elements.enter()
           .append("svg:g")
           .attr("class", function(d) {
@@ -201,12 +178,12 @@ $.extend(Hummingbird.Map.prototype, {
             }
           }).bind(this))
           .attr("transform", (function(d) { return this.transform(d) + " scale(0)" }).bind(this))
-          .remove()
+          .remove();
 
         elements.exit()
           .transition()
           .attr("transform", (function(d) { return this.transform(d) + " scale(0)" }).bind(this))
-          .remove()
+          .remove();
 
       }
     }

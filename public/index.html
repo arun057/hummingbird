@@ -9,8 +9,12 @@
   <meta name="description" content="Hummingbird is an open source real time analytics app.">
 
   <link rel="stylesheet" media="all" href="css/main.css" />
-  <link rel="stylesheet" media="all" href="css/map.css" />
   <link rel="stylesheet" media="all" href="css/weekly.css" />
+  <link rel="stylesheet" media="all" href="css/leaflet.css" />
+  <link rel="stylesheet" media="all" href="css/leaflet.ie.css" />
+  <link rel="stylesheet" media="all" href="css/map.css" />
+  <link rel="stylesheet" media="all" href="css/l.geosearch.css" />
+
 
   <script src="js/jquery-1.7.min.js"></script>
 
@@ -19,14 +23,17 @@
   <script src="js/helpers.js"></script>
   <script src="js/websocket.js"></script>
   <script src="js/d3.v2.js"></script>
-  <script src="js/polymaps.js"></script>
-  <script src="js/polymaps-extras.js"></script>
+  <script src="js/leaflet.js"></script>
 
   <script src="js/widgets/base.js"></script>
   <script src="js/widgets/logger.js"></script>
   <script src="js/widgets/graph.js"></script>
   <script src="js/widgets/count.js"></script>
-  <script src="js/widgets/map.js"></script>
+  <script src="js/widgets/map-leaflet.js"></script>
+  
+  <script src="js/l.control.geosearch.js"></script>
+  <script src="js/l.geosearch.provider.openstreetmap.js"></script>
+  
 
   <link rel="shortcut icon" type="image/png" href="https://si0.twimg.com/profile_images/378800000025541821/dca2b393f69d53fb11168cbfceeed461_bigger.png" />
 </head>
@@ -49,7 +56,16 @@
       <div class="axis_left"></div>
       <div class="axis_right"></div>
     </div>
+    
+   <div class="hummingbird_graph" id="minute_total">
+      <div class="graph"></div>
+      <div class="axis_left"></div>
+      <div class="axis_right"></div>
+    </div>
   </div>
+  
+  </div>
+  
 
   <div style="clear: both;"></div>
 
@@ -70,54 +86,51 @@
       $("#total").hummingbirdGraph(socket,
                                  {
                                    from: "view_totals",
-                                   bgLineColor: "#514e57",
-                                   tickLineColor: "#64616a",
+                                   bgLineColor: "#762A83",
+                                   tickLineColor: "#00441B",
                                    lineColors: {
-                                    def: "#ac84ed"
+                                    def: "#D9F0D3"
                                    },
                                    graphHeight: 80
                                  });
                                  
 
-      $("#minute_total").hummingbirdGraph(socket,
+      /*$("#minute_total").hummingbirdGraph(socket,
                                  {
-                                   from: "view_totals",
+                                   from: "minute_total",
                                    bgLineColor: "#514e57",
                                    tickLineColor: "#64616a",
                                    timeUnit: 1, // per second
                                    lineColors: {
                                      def: "#ac84ed"
                                    },
-                                   graphHeight: 80
-                                 });
+                                   graphHeight: 40
+                                 });*/
                                  
 
 
       $("#total h2.graph_title span.value").hummingbirdCount(socket,
                                                              {
                                                                from: "view_totals",
-                                                               every: 10
+                                                               every: 1
                                                              });
                                                              
-                                                             
-      $("#minute_total h2.graph_title span.value").hummingbirdCount(socket,
+      /*$("#minute_total h2.graph_title span.value").hummingbirdCount(socket,
                                                              {
-                                                               from: "view_totals",
+                                                               from: "minute_total",
                                                                every: 10
-                                                             });
-                                                             
-                                                             
+                                                             });     */                                                                                                 
 
       $("#map_container").hummingbirdMap(socket, { from: "locations" });
 
       new Hummingbird.Logger(window,
                              socket,
                              {
-                               from: "impressions",
-                              every: 500
+                               from: "view_totals",
+                               every: 500
                              });
 
-    });
+      });
   
   </script>
 
