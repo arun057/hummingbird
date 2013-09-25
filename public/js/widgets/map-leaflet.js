@@ -97,7 +97,8 @@ $.extend(Hummingbird.Map.prototype, {
         //TO DO: Change the map to display name of campain?
         if(typeof(geo.latitude) == "undefined") { continue; }
         if(! geo.city || geo.city == "") { geo.label = geo.CI; }
-        geo.label = [geo.city, (geo.country == 'US') ? geo.region : geo.country].join(', ');
+        else
+        	geo.label = [geo.city, (geo.country == 'US') ? geo.region : geo.country].join(', ');
 
         // Remove duplicates
         for(var i = 0, len = this.data.length; i < len; i++) {
