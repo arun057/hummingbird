@@ -94,15 +94,12 @@ $.extend(Hummingbird.Map.prototype, {
 
       for(var i in value) {
         var geo = value[i];
-        /*
+
         if(typeof(geo.latitude) == "undefined") { continue; }
         if( (! geo.city || geo.city == "") && ( typeof(geo.CC) == "undefined" || !geo.CC || geo.CC == "") ) { continue; }
         if(! geo.city || geo.city == ""){ geo.label = geo.CC; }
         else
-        	geo.label = [geo.city, (geo.country == 'US') ? geo.region : geo.country].join(', ');*/
-        //TO DO: Change the map to display name of campain?
-        if(typeof(geo.latitude) == "undefined" || ! geo.city || geo.city == "") { continue; }
-        geo.label = [geo.city, (geo.country == 'US') ? geo.region : geo.country].join(', ');
+        	geo.label = [geo.city, (geo.country == 'US') ? geo.region : geo.country].join(', ');
 
         // Remove duplicates
         for(var i = 0, len = this.data.length; i < len; i++) {
