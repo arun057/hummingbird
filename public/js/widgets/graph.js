@@ -26,7 +26,7 @@ Hummingbird.Graph = function(element, socket, options) {
     barColor: null,
     graphHeight: 216,
     averageOver: 0.5,
-    startingScale: 50,
+    startingScale: 150,
     lineColors: {
       6400: "#FFFFFF",
       3200: "#BBBBBB",
