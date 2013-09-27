@@ -143,11 +143,11 @@ $.extend(Hummingbird.Map.prototype, {
             function(newElement) {
               newElement.append("svg:circle")
                 .classed("radius", true)
-                .attr("r", 35)
+                .attr("r", 20)
                 .transition()
                 .ease("exp")
-                .delay(2000)
-                .duration(3000)
+                .delay(1000)
+                .duration(1000)
                 .attr("r", 3);
 
               newElement.append("svg:circle")
@@ -170,7 +170,7 @@ $.extend(Hummingbird.Map.prototype, {
                 .text(function(d) { return d.label; });
               })
           .transition()
-          .delay(5000)
+          .delay(2000)
           .attr("to_remove", (function(d) {
             for(var i = 0, len = this.data.length; i < len; i++) {
               if(this.key(d) == this.key(this.data[i])) {

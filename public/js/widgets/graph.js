@@ -17,15 +17,15 @@ Hummingbird.Graph = function(element, socket, options) {
   }
 
   var defaults = {
-    ratePerSecond: 20,
-    showLogDate: false,
+    ratePerSecond: 10,
+    showLogDate: true,
     showMarkers: true,
     showBackgroundBars: true,
     tickLineColor: '#666',
     bgLineColor: '#555',
     barColor: null,
     graphHeight: 216,
-    averageOver: 0.5,
+    averageOver: .1,
     startingScale: 150,
     lineColors: {
       6400: "#FFFFFF",
