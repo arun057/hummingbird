@@ -95,11 +95,11 @@ $.extend(Hummingbird.Map.prototype, {
       for(var i in value) {
         var geo = value[i];
 
+		console.log("Here");
         if(typeof(geo.latitude) == "undefined") { continue; }
-        if( (! geo.city || geo.city == "") && ( typeof(geo.CC) == "undefined" || !geo.CC || geo.CC == "") ) { continue; }
-        if(! geo.city || geo.city == ""){ geo.label = geo.CC; }
+        if( typeof(geo.CC) == "undefined" || !geo.CC || geo.CC == "" ) { continue; }
         else
-        	geo.label = [geo.city, (geo.country == 'US') ? geo.region : geo.country].join(', ');
+        	geo.label = geo.CC;
 
         // Remove duplicates
         for(var i = 0, len = this.data.length; i < len; i++) {
