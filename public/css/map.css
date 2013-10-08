@@ -105,6 +105,10 @@ div.hummingbird_map g.DFP circle {
   fill: #16de16;
 }
 
+div.hummingbird_map g.Test circle {
+  fill: #ff0000;
+}
+
 div.hummingbird_map text.label {
   font-size: 10px;
   fill: #FFF;
@@ -160,3 +164,8 @@ div.hummingbird_map div.legend div.DFP span {
 div.hummingbird_map div.legend div.AN span {
   background-color: #0395FE;
 }
+
+div.hummingbird_map div.legend div.Test span {
+  background-color: #ff0000;
+}
+
