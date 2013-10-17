@@ -158,11 +158,11 @@ $.extend(Hummingbird.Graph.prototype, {
     var oldScale = this.scale;
 
     if(percent === 0) { return; }
-    if(percent > 0.9) {
+    if(percent > 0.7) {
       this.scale = this.scale * 2;
-    } else if(percent < 0.08) {
+    } else if(percent < 0.04) {
       this.scale = this.scale / 4;
-    } else if(percent < 0.16) {
+    } else if(percent < 0.1) {
       this.scale = this.scale / 2;
     } else {
       return;
@@ -206,7 +206,7 @@ $.extend(Hummingbird.Graph.prototype, {
     var color = this.options.barColor || this.options.lineColors[this.scale] || this.options.lineColors.def;
     var lineHeight = this.graphHeight - height;
 
-    if(this.tick % (this.options.ratePerSecond * 2) == 0) { // Every 2 seconds
+    if(this.tick % (this.options.ratePerSecond * 2) == 0) { // Every 20 seconds
       this.element.attr('data-average', average);
 
       this.rescale(percent);

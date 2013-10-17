@@ -16,7 +16,7 @@ Hummingbird.Count = function(element, socket, options) {
   this.socket = socket;
 
   var defaults = {
-    averageOver: 1, // second
+    averageOver: 1000, // second
     ratePerSecond: 2,
     decimalPlaces: 0
   };
