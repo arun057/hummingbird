@@ -95,7 +95,6 @@ $.extend(Hummingbird.Map.prototype, {
       for(var i in value) {
         var geo = value[i];
 
-		console.log("Here");
         if(typeof(geo.latitude) == "undefined") { continue; }
         if( typeof(geo.CC) == "undefined" || !geo.CC || geo.CC == "" ) { continue; }
         else
