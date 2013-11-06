@@ -99,6 +99,25 @@ $.extend(Hummingbird.Map.prototype, {
         if( typeof(geo.CC) == "undefined" || !geo.CC || geo.CC == "" ) { continue; }
         else
         	geo.label = geo.CC;
+        	
+        if(geo.event == "DFP" && dfp_pt.indexOf(geo.PT) == -1)	{
+			dfp_pt.push(geo.PT);
+		}
+		else if(geo.event == "AN" && dfp_pt.indexOf(geo.PT) == -1)	{
+			an_pt.push(geo.PT);
+		}
+		
+		//Filters on dashboard
+		if(document.getElementById('URL_AP').value != "ALL"){
+			if(document.getElementById('URL_AP').value != geo.event){
+				break;
+			}
+			else if(document.getElementById('URL_PT').value != "ALL"){
+				if(document.getElementById('URL_AP').value != geo.PT){
+					break;
+				}
+			}
+		}
 
         // Remove duplicates
         for(var i = 0, len = this.data.length; i < len; i++) {

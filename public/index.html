@@ -14,6 +14,49 @@
   <link rel="stylesheet" media="all" href="css/leaflet.ie.css" />
   <link rel="stylesheet" media="all" href="css/map.css" />
   <link rel="stylesheet" media="all" href="css/l.geosearch.css" />
+  
+	<script>
+	var dfp_pt=new Array();
+	var an_pt=new Array();
+	an_pt.push("UNK");
+
+	function enablePT()
+	{
+		if(document.getElementById('URL_AP').value == "DFP"){
+			document.getElementById('URL_PT').disabled = false; 
+			var select = document.getElementById("URL_PT"); 
+			$("#URL_PT option").remove();
+			var el = document.createElement("option");
+			el.textContent = "ALL";
+			el.value = "ALL";
+    		select.appendChild(el);	
+			for( var i=0; i < dfp_pt.length; i++){
+				var opt = dfp_pt[i];
+    			var el = document.createElement("option");
+    			el.textContent = opt;
+    			el.value = opt;
+    			select.appendChild(el);	
+			}
+			
+		}	
+		else if(document.getElementById('URL_AP').value == "AN"){
+			document.getElementById('URL_PT').disabled = false; 
+			var select = document.getElementById("URL_PT"); 
+			$("#URL_PT option").remove();
+			var el = document.createElement("option");
+			el.textContent = "ALL";
+			el.value = "ALL";
+    		select.appendChild(el);	
+			for( var i=0; i < an_pt.length; i++){
+				var opt = an_pt[i];
+    			var el = document.createElement("option");
+    			el.textContent = opt;
+    			el.value = opt;
+    			select.appendChild(el);	
+			}
+		}
+	}	
+	</script> 
 
 
   <script src="js/jquery-1.7.min.js"></script>
@@ -33,7 +76,6 @@
   
   <script src="js/l.control.geosearch.js"></script>
   <script src="js/l.geosearch.provider.openstreetmap.js"></script>
-  
 
   <link rel="shortcut icon" type="image/png" href="https://si0.twimg.com/profile_images/378800000025541821/dca2b393f69d53fb11168cbfceeed461_bigger.png" />
 </head>
@@ -45,6 +87,15 @@
       <h1>PIQ Ad Tracker</h1>
 
       <div class="tagline">Real time web stats</div>
+      
+		<select id ="URL_AP" onclick=enablePT();>
+			<option>ALL</option>
+			<option>DFP</option>
+			<option>AN</option>
+		</select>
+		
+		<select id="URL_PT" disabled>
+		</select> 
 
       <!--<button id="test_it">Send test traffic</button>-->
       <!-- <button id="test_cart">Send "cart_add" event</button> -->
@@ -126,8 +177,8 @@
       new Hummingbird.Logger(window,
                              socket,
                              {
-                               from: "view_totals",
-                               every: 500
+                               from: "hits",
+                               every: 50
                              });
 
       });
