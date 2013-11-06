@@ -96,9 +96,9 @@ $.extend(Hummingbird.Map.prototype, {
         var geo = value[i];
 
         if(typeof(geo.latitude) == "undefined") { continue; }
-        if( typeof(geo.CC) == "undefined" || !geo.CC || geo.CC == "" ) { continue; }
+        if( typeof(geo.LI) == "undefined" || !geo.LI || geo.CC == "" ) { continue; }
         else
-        	geo.label = geo.CC;
+        	geo.label = geo.LI;
         	
         if(geo.event == "DFP" && dfp_pt.indexOf(geo.PT) == -1)	{
 			dfp_pt.push(geo.PT);
