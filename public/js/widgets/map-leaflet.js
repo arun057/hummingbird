@@ -113,7 +113,7 @@ $.extend(Hummingbird.Map.prototype, {
 				break;
 			}
 			else if(document.getElementById('URL_PT').value != "ALL"){
-				if(document.getElementById('URL_AP').value != geo.PT){
+				if(document.getElementById('URL_PT').value != geo.PT){
 					break;
 				}
 			}
