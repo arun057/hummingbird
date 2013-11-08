@@ -99,22 +99,38 @@ $.extend(Hummingbird.Map.prototype, {
         if( typeof(geo.LI) == "undefined" || !geo.LI || geo.CC == "" ) { continue; }
         else
         	geo.label = geo.LI;
-        	
-        if(geo.event == "DFP" && dfp_pt.indexOf(geo.PT) == -1)	{
-			dfp_pt.push(geo.PT);
-		}
-		else if(geo.event == "AN" && dfp_pt.indexOf(geo.PT) == -1)	{
-			an_pt.push(geo.PT);
-		}
+		
 		
 		//Filters on dashboard
 		if(document.getElementById('URL_AP').value != "ALL"){
+			//Add DFP and AN PTs
+	        if(geo.event == "DFP" && dfp_pt.indexOf(geo.PT) == -1)	{
+				dfp_pt.push(geo.PT);
+				enablePT();
+			}
+			else if(geo.event == "AN" && an_pt.indexOf(geo.PT) == -1)	{
+				an_pt.push(geo.PT);
+				enablePT();
+			}
+			if(geo.PT == document.getElementById('URL_PT').value && url_li.indexOf(geo.LI) == -1){
+				url_li.push(geo.LI);
+				appendLI();
+			}
+			
+			//Filter on AP
 			if(document.getElementById('URL_AP').value != geo.event){
 				break;
 			}
+			//Filter on PT
 			else if(document.getElementById('URL_PT').value != "ALL"){
 				if(document.getElementById('URL_PT').value != geo.PT){
 					break;
+				}
+				//Filter on LI
+				else if(document.getElementById('URL_LI').value != "ALL"){
+					if(document.getElementById('URL_LI').value != geo.LI){
+						break;
+					}
 				}
 			}
 		}
@@ -125,7 +141,7 @@ $.extend(Hummingbird.Map.prototype, {
             this.data.splice(i, 1);
             break;
           }
-        }
+       	}
 
         this.data.push(geo);
 

@@ -18,7 +18,7 @@
 	<script>
 	var dfp_pt=new Array();
 	var an_pt=new Array();
-	an_pt.push("UNK");
+	var url_li=new Array();
 
 	function enablePT()
 	{
@@ -36,8 +36,9 @@
     			el.textContent = opt;
     			el.value = opt;
     			select.appendChild(el);	
-			}
-			
+			} 	
+			url_li=new Array();
+			enableLI();
 		}	
 		else if(document.getElementById('URL_AP').value == "AN"){
 			document.getElementById('URL_PT').disabled = false; 
@@ -52,8 +53,51 @@
     			var el = document.createElement("option");
     			el.textContent = opt;
     			el.value = opt;
-    			select.appendChild(el);	
-			}
+    			select.appendChild(el);		
+    		}
+    		url_li=new Array();
+			enableLI();
+		}
+		else //ALL
+		{
+			document.getElementById('URL_PT').disabled = true;	
+			document.getElementById('URL_LI').disabled = true; 
+		}
+	}	
+	
+	function enableLI()
+	{
+		document.getElementById('URL_LI').disabled = false;
+		url_li=new Array();
+		var select = document.getElementById("URL_LI"); 
+		$("#URL_LI option").remove();
+		var el = document.createElement("option");
+		el.textContent = "ALL";
+		el.value = "ALL";
+		select.appendChild(el);	
+		for( var i=0; i < url_li.length; i++){
+			var opt = url_li[i];
+			var el = document.createElement("option");
+			el.textContent = opt;
+			el.value = opt;
+			select.appendChild(el);	
+		}
+	}	
+	
+	function appendLI()
+	{
+		var select = document.getElementById("URL_LI"); 
+		$("#URL_LI option").remove();
+		var el = document.createElement("option");
+		el.textContent = "ALL";
+		el.value = "ALL";
+		select.appendChild(el);	
+		for( var i=0; i < url_li.length; i++){
+			var opt = url_li[i];
+			var el = document.createElement("option");
+			el.textContent = opt;
+			el.value = opt;
+			select.appendChild(el);	
 		}
 	}	
 	</script> 
@@ -88,14 +132,20 @@
 
       <div class="tagline">Real time web stats</div>
       
-		<select id ="URL_AP" onclick=enablePT();>
+		<select id ="URL_AP" onchange=enablePT()> 
 			<option>ALL</option>
 			<option>DFP</option>
 			<option>AN</option>
 		</select>
 		
-		<select id="URL_PT" disabled>
+		<select id="URL_PT" disabled onchange=enableLI()>
+			<option selected="selected">ALL</option>
 		</select> 
+		
+		<select id="URL_LI" disabled>
+			<option selected="selected">ALL</option>
+		</select> 
+
 
       <!--<button id="test_it">Send test traffic</button>-->
       <!-- <button id="test_cart">Send "cart_add" event</button> -->
